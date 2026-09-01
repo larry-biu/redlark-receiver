@@ -32,6 +32,9 @@ Xiaohongshu and Feishu/Lark enhanced capture requires both components:
 Ordinary Chrome clipping can continue without the Receiver, but enhanced local
 image and comment saving cannot.
 
+For release maintenance and Community Plugins submission, see
+[`PUBLISHING.md`](./PUBLISHING.md).
+
 ## Attribution and license
 
 RedLark Receiver is MIT-licensed. Portions of the Vault path and attachment
