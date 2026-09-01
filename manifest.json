@@ -1,0 +1,10 @@
+{
+	"id": "redlark-receiver",
+	"name": "RedLark Receiver",
+	"version": "1.4.0",
+	"minAppVersion": "0.15.0",
+	"description": "Receives current-page captures from RedLark Clipper and stores notes with local attachments.",
+	"author": "larryssss",
+	"authorUrl": "https://redlark-privacy.pages.dev/",
+	"isDesktopOnly": true
+}

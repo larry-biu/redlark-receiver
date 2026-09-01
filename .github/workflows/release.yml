@@ -1,0 +1,27 @@
+name: Release Obsidian plugin
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate release files
+        run: |
+          node --check main.js
+          test "$(node -p "require('./manifest.json').version")" = "$GITHUB_REF_NAME"
+          test -s styles.css
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" main.js manifest.json styles.css \
+            --title "RedLark Receiver $GITHUB_REF_NAME" \
+            --notes-file CHANGELOG.md
