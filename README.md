@@ -8,14 +8,15 @@ is an independent product rather than an official Obsidian extension.
   ribbon icon or standalone background service.
 - It accepts the expected Chrome extension identity, writes the note/assets, and
   returns `complete`, `partial`, or `failed` only after Vault readback.
-- Note and comment images use Obsidian's own default attachment location through
-  `FileManager.getAvailablePathForAttachment()`.
-- Xiaohongshu and Feishu/Lark note folders are configured in RedLark Clipper,
-  not in this Receiver.
+- Note and comment images use Obsidian's own attachment location through
+  `FileManager.getAvailablePathForAttachment()` by default. RedLark Clipper can
+  optionally provide one shared Vault-relative attachment folder.
+- Xiaohongshu and Feishu/Lark capture switches, comment options, and destination
+  folders are configured in RedLark Clipper, not in this Receiver.
 - New Xiaohongshu captures use a responsive editorial reading layout with a
   source card, post body, image gallery, engagement summary, and comment thread.
-- The browser collector attempts up to 150 main comments and preserves loaded
-  replies and comment images.
+- The browser collector can include up to 150 main comments and preserves loaded
+  replies and comment images; both comment capture and its limit are configurable.
 - The Receiver has no ribbon icon, manual import command, clipboard watcher, or
   business settings page. The current workflow handles exactly one active page
   per click and does not perform batch import.

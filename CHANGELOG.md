@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+- Accept an optional Vault-relative attachment folder from RedLark Clipper.
+- Continue using Obsidian's configured attachment location when that field is
+  empty, preserving existing behavior and user settings.
+
 ## 1.4.0
 
 - Focus the plugin on one job: receive one active-page capture from RedLark

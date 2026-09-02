@@ -8,7 +8,7 @@
 3. Add the repository as a plugin. The directory reads `manifest.json` from the
    default branch, so commit it before submitting.
 4. Confirm the manifest version exactly matches a public GitHub Release tag.
-   The tag is `1.4.0`, not `v1.4.0`.
+   For this release the tag is `1.4.1`, not `v1.4.1`.
 5. Confirm that the Release contains `main.js`, `manifest.json`, and
    `styles.css` as separate downloadable assets.
 6. Submit and address the automated and human review feedback. If code changes,

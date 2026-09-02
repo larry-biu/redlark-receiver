@@ -264,7 +264,27 @@ class RedLarkReceiverPlugin extends Plugin {
     }
   }
 
-  async attachmentPath(filename, notePath) {
+  async uniqueAttachmentPath(folderPath, filename) {
+    const folder = normalizeNoteFolder(folderPath);
+    await this.ensureFolder(folder);
+    const safeName = sanitizeFilename(filename || "attachment.bin");
+    const extensionIndex = safeName.lastIndexOf(".");
+    const hasExtension = extensionIndex > 0;
+    const stem = hasExtension ? safeName.slice(0, extensionIndex) : safeName;
+    const extension = hasExtension ? safeName.slice(extensionIndex) : "";
+    let counter = 0;
+    while (true) {
+      const suffix = counter ? `-${counter}` : "";
+      const path = normalizePath(`${folder ? `${folder}/` : ""}${stem}${suffix}${extension}`);
+      if (!(await this.app.vault.adapter.exists(path))) return path;
+      counter += 1;
+    }
+  }
+
+  async attachmentPath(filename, notePath, configuredFolder = "") {
+    if (String(configuredFolder || "").trim()) {
+      return this.uniqueAttachmentPath(configuredFolder, filename);
+    }
     if (!this.app.fileManager?.getAvailablePathForAttachment) {
       throw new Error("当前 Obsidian 版本不支持默认附件位置接口");
     }
@@ -319,6 +339,7 @@ class RedLarkReceiverPlugin extends Plugin {
   async importPayload(payload) {
     const assets = this.validatePayload(payload);
     const noteFolder = normalizeNoteFolder(payload.noteFolder);
+    const attachmentFolder = normalizeNoteFolder(payload.attachmentFolder);
     await this.ensureFolder(noteFolder);
     const notePath = await this.uniqueNotePath(noteFolder, payload.noteName);
     let markdown = payload.markdown;
@@ -328,7 +349,7 @@ class RedLarkReceiverPlugin extends Plugin {
     for (const asset of assets) {
       try {
         const bytes = await this.readAssetWithRetry(asset);
-        const path = await this.attachmentPath(asset.filename, notePath);
+        const path = await this.attachmentPath(asset.filename, notePath, attachmentFolder);
         await this.app.vault.createBinary(path, bytes);
         const created = this.app.vault.getAbstractFileByPath(path);
         if (!created) throw new Error(`附件写入后不存在：${path}`);
